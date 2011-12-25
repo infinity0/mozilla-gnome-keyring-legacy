@@ -55,14 +55,6 @@ extern PRLogModuleInfo *gGnomeKeyringLog;
 class GnomeKeyring : public nsILoginManagerStorage
 {
 private:
-  void
-  buildAttributeList(nsILoginInfo *aLogin,
-                     GnomeKeyringAttributeList **attributes);
-
-  void
-  appendAttributesFromBag(nsIPropertyBag *matchData,
-                          GnomeKeyringAttributeList **attributes);
-
   nsresult
   deleteFoundItems(GList* foundList,
                    PRBool);
