@@ -779,7 +779,7 @@ NS_IMETHODIMP GnomeKeyring::GetAllDisabledHosts(PRUint32 *aCount,
 }
 
 NS_IMETHODIMP GnomeKeyring::GetLoginSavingEnabled(const nsAString & aHost,
-                                                  PRBool *_retval)
+                                                  bool *_retval)
 {
   AutoFoundList foundList;
   GnomeKeyringResult result = findHostItems(aHost, &foundList);
@@ -790,7 +790,7 @@ NS_IMETHODIMP GnomeKeyring::GetLoginSavingEnabled(const nsAString & aHost,
 }
 
 NS_IMETHODIMP GnomeKeyring::SetLoginSavingEnabled(const nsAString & aHost,
-                                                  PRBool isEnabled)
+                                                  bool isEnabled)
 {
   GnomeKeyringResult result;
 
@@ -862,7 +862,7 @@ NS_IMETHODIMP GnomeKeyring::CountLogins(const nsAString & aHostname,
  * True when a master password prompt is being shown.
  */
 /* readonly attribute boolean uiBusy; */
-NS_IMETHODIMP GnomeKeyring::GetUiBusy(PRBool *aUiBusy)
+NS_IMETHODIMP GnomeKeyring::GetUiBusy(bool *aUiBusy)
 {
   *aUiBusy = FALSE;
   return NS_OK;
