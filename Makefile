@@ -1,8 +1,8 @@
 PACKAGE          ?= mozilla-gnome-keyring
 VERSION          ?= 0.8#$(shell git describe --tags 2>/dev/null || date +dev-%s)
 # max/min compatibility versions to set, only if "xulrunner" tool is not available
-XUL_VER_MIN      ?= 12.0.0
-XUL_VER_MAX      ?= 12.*
+XUL_VER_MIN      ?= 13.0.0
+XUL_VER_MAX      ?= 13.*
 # package distribution variables
 FULLNAME         ?= $(PACKAGE)-$(VERSION)
 ARCHIVENAME      ?= $(FULLNAME)
@@ -31,7 +31,7 @@ XUL_VERSION      = $(shell echo '\#include "mozilla-config.h"'| \
                      sed -n -e 's/\#[[:space:]]*define[[:space:]]\+MOZILLA_VERSION[[:space:]]\+\"\(.*\)\"/\1/gp')
 
 # construct Mozilla architectures string
-PLATFORM         ?= $(shell make -s get_abi PLATFORM=unknown || echo unknown)
+PLATFORM         ?= Linux_$(shell uname -m)-gcc3#$(shell make -s get_abi PLATFORM=unknown || echo unknown)
 
 TARGET           := libgnomekeyring.so
 XPI_TARGET       := $(FULLNAME).xpi
