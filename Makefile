@@ -1,8 +1,8 @@
 PACKAGE          ?= mozilla-gnome-keyring
 VERSION          ?= 0.8#$(shell git describe --tags 2>/dev/null || date +dev-%s)
 # max/min compatibility versions to set, only if "xulrunner" tool is not available
-XUL_VER_MIN      ?= 13.0.0
-XUL_VER_MAX      ?= 13.*
+XUL_VER_MIN      ?= 14.0.0
+XUL_VER_MAX      ?= 14.*
 # package distribution variables
 FULLNAME         ?= $(PACKAGE)-$(VERSION)
 ARCHIVENAME      ?= $(FULLNAME)
