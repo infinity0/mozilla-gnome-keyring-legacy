@@ -1,7 +1,7 @@
 PACKAGE          ?= mozilla-gnome-keyring
-VERSION          ?= 0.8#$(shell git describe --tags 2>/dev/null || date +dev-%s)
+VERSION          ?= 0.8-5
 # max/min compatibility versions to set, only if "xulrunner" tool is not available
-XUL_VER_MIN      ?= 14.0.0
+XUL_VER_MIN      ?= 14.0
 XUL_VER_MAX      ?= 14.*
 # package distribution variables
 FULLNAME         ?= $(PACKAGE)-$(VERSION)
@@ -26,8 +26,8 @@ GNOME_LDFLAGS    := `pkg-config --libs gnome-keyring-1`
 CXXFLAGS         += -Wall -fno-rtti -fno-exceptions -fPIC -std=gnu++0x
 
 # determine xul version from "mozilla-config.h" include file
-XUL_VERSION      = $(shell echo '\#include "mozilla-config.h"'| \
-                     $(CXX) $(XUL_CFLAGS) $(CXXFLAGS) -shared -x c++ -w -E -fdirectives-only - | \
+#XUL_VERSION      = $(shell echo '\#include "mozilla-config.h"'| \
+#                     $(CXX) $(XUL_CFLAGS) $(CXXFLAGS) -shared -x c++ -w -E -fdirectives-only - | \
                      sed -n -e 's/\#[[:space:]]*define[[:space:]]\+MOZILLA_VERSION[[:space:]]\+\"\(.*\)\"/\1/gp')
 
 # construct Mozilla architectures string
