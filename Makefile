@@ -29,7 +29,7 @@ CXXFLAGS         += -Wall -fno-rtti -fno-exceptions -fPIC -std=gnu++0x
 XUL_VERSION      = $(shell echo '\#include "mozilla-config.h"'| \
                      $(CXX) $(XUL_CFLAGS) $(CXXFLAGS) -shared -x c++ -w -E -fdirectives-only - | \
                      sed -n -e 's/\#[[:space:]]*define[[:space:]]\+MOZILLA_VERSION[[:space:]]\+\"\(.*\)\"/\1/gp')
-XUL_VER_MIN      ?= $(XUL_VERSION)
+XUL_VER_MIN      ?= `echo $(XUL_VERSION) | sed -r -e 's/([^.]+\.[^.]+).*/\1/g'`
 XUL_VER_MAX      ?= `echo $(XUL_VERSION) | sed -rn -e 's/([^.]+).*/\1.*/gp'`
 # if auto-detect but xulrunner is not available, fall back to these values
 XUL_VER_MIN_     ?= 10.0.1
