@@ -32,5 +32,6 @@
     <em:description>Store passwords and form logins in GNOME Keyring.</em:description>
     <em:creator>Matt Lavin</em:creator>
     <em:unpack>true</em:unpack>
+    <em:iconURL>chrome://gnome-keyring/skin/seahorse.svg</em:iconURL>
   </Description>
 </RDF>

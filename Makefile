@@ -29,7 +29,7 @@ LDFLAGS          +=
 
 # work around mozilla bug #763327
 NEED_HASHFUNC    = $(shell echo '\#include "mozilla/HashFunctions.h"'| \
-                     $(CXX) $(XUL_CFLAGS) $(CXXFLAGS) -shared -x c++ -w -fdirectives-only - \
+                     $(CXX) $(XUL_CFLAGS) $(CXXFLAGS) -o /dev/null -shared -x c++ -w -fdirectives-only - \
                      && echo true || echo false)
 # determine xul version from "mozilla-config.h" include file
 XUL_VERSION      = $(shell echo '\#include "mozilla-config.h"'| \
@@ -53,7 +53,9 @@ XPI_TARGET       := $(FULLNAME).xpi
 BUILD_FILES      := \
 xpi/platform/$(PLATFORM)/components/$(TARGET) \
 xpi/install.rdf \
-xpi/chrome.manifest
+xpi/chrome.manifest \
+xpi/defaults/preferences/gnome-keyring.js \
+xpi/chrome/skin/hicolor/seahorse.svg
 
 
 .PHONY: all build build-xpi tarball
@@ -92,6 +94,14 @@ xpi/chrome.manifest: chrome.manifest Makefile
 	sed -e 's	$${PLATFORM}	'$(PLATFORM)'	g' \
 	    -e 's	$${TARGET}	'$(TARGET)'	g' \
 	    $< > $@
+
+xpi/defaults/preferences/gnome-keyring.js: gnome-keyring.js
+	mkdir -p xpi/defaults/preferences
+	cp -a $< $@
+
+xpi/chrome/skin/hicolor/seahorse.svg: seahorse.svg
+	mkdir -p xpi/chrome/skin/hicolor
+	cp -a $< $@
 
 $(TARGET): GnomeKeyring.cpp GnomeKeyring.h Makefile
 	$(CXX) $< -o $@ -shared \
