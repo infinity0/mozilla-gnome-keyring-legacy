@@ -21,7 +21,7 @@ int main(int argc, char **argv) {
 	nsresult rv;
 
 	nsCOMPtr<nsIServiceManager> servMan;
-	rv = NS_InitXPCOM2(getter_AddRefs(servMan), nsnull, nsnull);
+	rv = NS_InitXPCOM2(getter_AddRefs(servMan), nullptr, nullptr);
 	if (!NS_SUCCEEDED(rv)) return rv;
 
 	nsCOMPtr<nsIXULRuntime> xulrun = do_GetService(XULAPPINFO_SERVICE_CONTRACTID, &rv);
@@ -35,6 +35,6 @@ int main(int argc, char **argv) {
 	if (!NS_SUCCEEDED(rv)) return rv;
 	printf("%s_%s\n", xpcomOs.get(), xpcomAbi.get());
 
-	rv = NS_ShutdownXPCOM(nsnull);
+	rv = NS_ShutdownXPCOM(nullptr);
 	return 0;
 }

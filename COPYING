@@ -1,6 +1,6 @@
 All of the source code to this product is available[1] under licenses
-which are both free and open source. All are available under any of the
-following:
+which are both free and open source. All, apart from special cases
+listed further below, are available under any of the following:
 
 * the Mozilla Public License (MPL), version 1.1
 * the GNU General Public License (GPL), version 2 or later
@@ -10,6 +10,11 @@ That is, you may copy and distribute such software according to the
 terms of any one of those licenses.
 
 [1] https://github.com/infinity0/mozilla-gnome-keyring/network
+
+seahorse.svg is distributed under the GPL version 2 or later, being
+derived from data[2] from the GNOME seahorse project.
+
+[2] http://git.gnome.org/browse/seahorse/tree/data/icons/svg/seahorse.svg?h=gnome-2-32
 
 ## Mozilla Public License
 

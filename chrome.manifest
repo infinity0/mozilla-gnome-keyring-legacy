@@ -1,1 +1,2 @@
-binary-component platform/${PLATFORM}/components/libgnomekeyring.so ABI=${PLATFORM}
+skin gnome-keyring hicolor chrome/skin/hicolor/
+binary-component platform/${PLATFORM}/components/${TARGET} ABI=${PLATFORM}

@@ -29,8 +29,10 @@
     <em:targetPlatform>${PLATFORM}</em:targetPlatform>
 
     <em:name>GNOME Keyring integration</em:name>
-    <em:description>Store passwords and form logins in GNOME Keyring.</em:description>
+    <em:description>Store passwords and form logins in GNOME Keyring. Set keyring name in "extensions.gnome-keyring.keyringName" preference (about:config).</em:description>
     <em:creator>Matt Lavin</em:creator>
     <em:unpack>true</em:unpack>
+    <em:iconURL>chrome://gnome-keyring/skin/seahorse.svg</em:iconURL>
+    <em:homepageURL>http://github.com/infinity0/mozilla-gnome-keyring/</em:homepageURL>
   </Description>
 </RDF>

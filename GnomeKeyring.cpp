@@ -601,7 +601,7 @@ NS_IMETHODIMP GnomeKeyring::Init()
     char* tempKeyringName;
     pref->GetCharPref(kPrefsKeyring, &tempKeyringName);
     keyringName = tempKeyringName;
-    if ( keyringName.IsVoid() ) keyringName.AssignLiteral(kDefaultKeyring);
+    if ( keyringName.IsVoid() || keyringName.IsEmpty() ) keyringName.AssignLiteral(kDefaultKeyring);
   }
 
   /* Create the password keyring, it doesn't hurt if it already exists */
