@@ -32,14 +32,15 @@ NEED_HASHFUNC    = $(shell echo '\#include "mozilla/HashFunctions.h"'| \
                      $(CXX) $(XUL_CFLAGS) $(CXXFLAGS) -o /dev/null -shared -x c++ -w -fdirectives-only - \
                      && echo true || echo false)
 # determine xul version from "mozilla-config.h" include file
-#XUL_VERSION      = $(shell echo '\#include "mozilla-config.h"'| \
-#                     $(CXX) $(XUL_CFLAGS) $(CXXFLAGS) -shared -x c++ -w -E -fdirectives-only - | \
+XUL_VERSION      = $(shell echo '\#include "mozilla-config.h"'| \
+                     $(CXX) $(XUL_CFLAGS) $(CXXFLAGS) -shared -x c++ -w -E -fdirectives-only - | \
                      sed -n -e 's/\#[[:space:]]*define[[:space:]]\+MOZILLA_VERSION[[:space:]]\+\"\(.*\)\"/\1/gp')
 XUL_VER_MIN      ?= `echo $(XUL_VERSION) | sed -r -e 's/([^.]+\.[^.]+).*/\1/g'`
 XUL_VER_MAX      ?= `echo $(XUL_VERSION) | sed -rn -e 's/([^.]+).*/\1.*/gp'`
 # if auto-detect but xulrunner is not available, fall back to these values
 XUL_VER_MIN_     ?= 10.0.1
 XUL_VER_MAX_     ?= 10.*
+
 
 # platform-specific handling
 # lazy variables, instantiated properly in a sub-make since make doesn't
