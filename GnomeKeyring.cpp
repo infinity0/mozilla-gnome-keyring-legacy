@@ -667,8 +667,11 @@ NS_IMETHODIMP GnomeKeyring::ModifyLogin(nsILoginInfo *oldLogin,
   nsCOMPtr<nsILoginInfo> newLogin( do_QueryInterface(modLogin, &interfaceok) );
   if (interfaceok == NS_OK) {
     nsresult rv = RemoveLogin(oldLogin);
-    rv |= AddLogin(newLogin);
-    return rv;
+    if(NS_FAILED(rv)) {
+        return rv;
+    }
+
+    return AddLogin(newLogin);
   }
 
   /* Otherwise, it has to be an nsIPropertyBag.

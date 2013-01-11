@@ -24,7 +24,7 @@ endif
 
 GNOME_CFLAGS     := `pkg-config --cflags gnome-keyring-1`
 GNOME_LDFLAGS    := `pkg-config --libs gnome-keyring-1`
-CXXFLAGS         += -Wall -fno-rtti -fno-exceptions -fPIC -std=gnu++0x
+CXXFLAGS         += -Wall -fno-rtti -fno-exceptions -fPIC -std=gnu++0x -D__STDC_LIMIT_MACROS
 LDFLAGS          +=
 
 # work around mozilla bug #763327
