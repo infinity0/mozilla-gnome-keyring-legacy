@@ -19,7 +19,7 @@ XUL_PKG_NAME     := $(XUL_PKG_NAME)
 ifneq ($(XUL_PKG_NAME),)
 XUL_CFLAGS       := `pkg-config --cflags $(XUL_PKG_NAME)`
 XUL_LDFLAGS      := `pkg-config --libs $(XUL_PKG_NAME)`
-XPCOM_ABI_FLAGS  += `pkg-config --libs-only-L $(XUL_PKG_NAME) | sed -e 's/-L\(\S*\).*/-Wl,-rpath=\1/' | sed -n -e 'p;s/^\(.*\)-devel\(.*\)\/lib$$/\1\2/gp'`
+XPCOM_ABI_FLAGS  += `pkg-config --libs-only-L $(XUL_PKG_NAME) | sed -e 's/-L\(\S*\).*/-Wl,-rpath=\1/' | sed -n -e 'p;s/^\(.*\)-devel\(.*\)\/lib$$/\1\2/gp'` -Wl,-whole-archive -lmozglue -Wl,-no-whole-archive
 endif
 
 GNOME_CFLAGS     := `pkg-config --cflags gnome-keyring-1`
@@ -27,10 +27,6 @@ GNOME_LDFLAGS    := `pkg-config --libs gnome-keyring-1`
 CXXFLAGS         += -Wall -fno-rtti -fno-exceptions -fPIC -std=gnu++0x -D__STDC_LIMIT_MACROS
 LDFLAGS          +=
 
-# work around mozilla bug #763327
-NEED_HASHFUNC    = $(shell echo '\#include "mozilla/HashFunctions.h"'| \
-                     $(CXX) $(XUL_CFLAGS) $(CXXFLAGS) -o /dev/null -shared -x c++ -w -fdirectives-only - \
-                     && echo true || echo false)
 # determine xul version from "mozilla-config.h" include file
 XUL_VERSION      = $(shell echo '\#include "mozilla-config.h"'| \
                      $(CXX) $(XUL_CFLAGS) $(CXXFLAGS) -shared -x c++ -w -E -fdirectives-only - | \
@@ -108,12 +104,8 @@ $(TARGET): GnomeKeyring.cpp GnomeKeyring.h Makefile
 	    $(XUL_CFLAGS) $(XUL_LDFLAGS) $(GNOME_CFLAGS) $(GNOME_LDFLAGS) $(CXXFLAGS) $(LDFLAGS)
 	chmod +x $@
 
-xpcom_abi: xpcom_abi.cpp HashFunctions.cpp Makefile
-ifeq "$(NEED_HASHFUNC)" "true"
-	$(CXX) $< -o $@ $(XUL_CFLAGS) $(XUL_LDFLAGS) $(XPCOM_ABI_FLAGS) $(CXXFLAGS) $(LDFLAGS) $(word 2,$^)
-else
+xpcom_abi: xpcom_abi.cpp Makefile
 	$(CXX) $< -o $@ $(XUL_CFLAGS) $(XUL_LDFLAGS) $(XPCOM_ABI_FLAGS) $(CXXFLAGS) $(LDFLAGS)
-endif
 
 tarball:
 	git archive --format=tar \
