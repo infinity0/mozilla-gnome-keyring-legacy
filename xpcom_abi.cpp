@@ -23,17 +23,17 @@ int main(int argc, char **argv) {
 
 	nsCOMPtr<nsIServiceManager> servMan;
 	rv = NS_InitXPCOM2(getter_AddRefs(servMan), nullptr, nullptr);
-	if (!NS_SUCCEEDED(rv)) return rv;
+	if (!NS_SUCCEEDED(rv)) return NS_ERROR_GET_CODE(rv);
 
 	nsCOMPtr<nsIXULRuntime> xulrun = do_GetService(XULAPPINFO_SERVICE_CONTRACTID, &rv);
-	if (!NS_SUCCEEDED(rv)) return rv;
+	if (!NS_SUCCEEDED(rv)) return NS_ERROR_GET_CODE(rv);
 
 	nsCString xpcomAbi;
 	nsCString xpcomOs;
 	rv = xulrun->GetOS(xpcomOs);
-	if (!NS_SUCCEEDED(rv)) return rv;
+	if (!NS_SUCCEEDED(rv)) return NS_ERROR_GET_CODE(rv);
 	rv = xulrun->GetXPCOMABI(xpcomAbi);
-	if (!NS_SUCCEEDED(rv)) return rv;
+	if (!NS_SUCCEEDED(rv)) return NS_ERROR_GET_CODE(rv);
 	printf("%s_%s\n", xpcomOs.get(), xpcomAbi.get());
 
 	rv = NS_ShutdownXPCOM(nullptr);
