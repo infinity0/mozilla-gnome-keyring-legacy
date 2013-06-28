@@ -873,6 +873,13 @@ NS_IMETHODIMP GnomeKeyring::GetUiBusy(bool *aUiBusy)
   return NS_OK;
 }
 
+/* readonly attribute boolean isLoggedIn; */
+NS_IMETHODIMP GnomeKeyring::GetIsLoggedIn(bool *aIsLoggedIn)
+{
+  *aIsLoggedIn = FALSE;
+  return NS_OK;
+}
+
 
 
 /* End of implementation class template. */
