@@ -7,7 +7,7 @@ Build-Depends: debhelper (>= 9),
                icedove-dev (>= 30.0~),
                libgnome-keyring-dev,
                mozilla-devscripts (>= 0.29),
-               xulrunner-dev (>= 29.0~)
+               iceweasel-dev (>= 30.0~)
 Standards-Version: 3.9.5
 Homepage: https://github.com/infinity0/mozilla-gnome-keyring
 Vcs-Git: git://github.com/infinity0/mozilla-gnome-keyring.git -b debian
