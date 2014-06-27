@@ -1,4 +1,5 @@
 PACKAGE          ?= $(shell cd .. && dh_listpackages | head -n1)
+VERSION          ?= $(shell cd .. && dpkg-parsechangelog -SVersion | sed -e 's/-.*//g')
 
 XPI_DEFAULT = target.xpi
 XPI_TARGET = ../$(PACKAGE).xpi
@@ -36,11 +37,11 @@ xpi-icedove: link-icedove
 	unzip -o -d "$@" $</$(XPI_DEFAULT)
 
 link-iceweasel:
-	mkdir -p "$@" && $(MAKE) -C "$@" -f ../../Makefile VPATH=../.. \
+	mkdir -p "$@" && $(MAKE) -C "$@" -f ../../Makefile VERSION="$(VERSION)" VPATH=../.. \
 	  XPI_TARGET=$(XPI_DEFAULT)
 
 link-icedove:
-	mkdir -p "$@" && $(MAKE) -C "$@" -f ../../Makefile VPATH=../.. \
+	mkdir -p "$@" && $(MAKE) -C "$@" -f ../../Makefile VERSION="$(VERSION)" VPATH=../.. \
 	  XUL_PKG_NAME=icedove LDFLAGS="$(LDFLAGS) -lmozalloc" \
 	  TARGET=libgnomekeyring-icedove.so XPI_TARGET=$(XPI_DEFAULT)
 
