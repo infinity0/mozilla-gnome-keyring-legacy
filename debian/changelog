@@ -1,3 +1,9 @@
+mozilla-gnome-keyring (0.6.11-3) UNRELEASED; urgency=medium
+
+  * Build for iceweasel 31 and icedove 31. (Closes: #757933)
+
+ -- Ximin Luo <infinity0@pwned.gg>  Sat, 16 Aug 2014 11:25:46 +0100
+
 mozilla-gnome-keyring (0.6.11-2) unstable; urgency=medium
 
   * Build for iceweasel 30 and icedove 30.

@@ -4,10 +4,10 @@ Priority: optional
 Maintainer: Ximin Luo <infinity0@pwned.gg>
 Build-Depends: debhelper (>= 9),
                dpkg-dev (>= 1.16.1),
-               icedove-dev (>= 30.0~),
+               icedove-dev (>= 31.0),
                libgnome-keyring-dev,
                mozilla-devscripts (>= 0.29),
-               iceweasel-dev (>= 30.0~)
+               iceweasel-dev (>= 31.0)
 Standards-Version: 3.9.5
 Homepage: https://github.com/infinity0/mozilla-gnome-keyring
 Vcs-Git: git://github.com/infinity0/mozilla-gnome-keyring.git -b debian
