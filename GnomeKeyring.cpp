@@ -578,8 +578,11 @@ NS_INTERFACE_MAP_ENTRY_AMBIGUOUS(nsISupports, nsILoginManagerStorage)
 NS_INTERFACE_MAP_END
 
 // End code to deal with 4.0  / 3.6 compatibility
-
+#if HAVE_NSILMS_INITALIZE_MUTABLEHANDLE
+NS_IMETHODIMP GnomeKeyring::Initialize(JS::MutableHandleValue _retval)
+#else
 NS_IMETHODIMP GnomeKeyring::Init()
+#endif
 {
   nsresult ret;
   nsCOMPtr<nsIServiceManager> servMan;
@@ -624,6 +627,14 @@ NS_IMETHODIMP GnomeKeyring::Init()
   return ret;
 }
 
+#if HAVE_NSILMS_TERMINATE_MUTABLEHANDLE
+NS_IMETHODIMP GnomeKeyring::Terminate(JS::MutableHandleValue _retval)
+{
+    return NS_ERROR_NOT_IMPLEMENTED;
+}
+#endif
+
+#if (HAVE_NSILMS_INITWITHFILE_2 || HAVE_NSILMS_INITWITHFILE_1)
 #if HAVE_NSILMS_INITWITHFILE_2
 NS_IMETHODIMP GnomeKeyring::InitWithFile(nsIFile *aInputFile,
                                          nsIFile *aOutputFile)
@@ -631,9 +642,13 @@ NS_IMETHODIMP GnomeKeyring::InitWithFile(nsIFile *aInputFile,
 NS_IMETHODIMP GnomeKeyring::InitWithFile(nsIFile *aInputFile)
 #endif
 {
-  // TODO
+#if HAVE_NSILMS_INITALIZE_MUTABLEHANDLE
+  return NS_ERROR_NOT_IMPLEMENTED;
+#else
   return Init();
+#endif
 }
+#endif
 
 NS_IMETHODIMP GnomeKeyring::AddLogin(nsILoginInfo *aLogin)
 {
@@ -766,11 +781,13 @@ NS_IMETHODIMP GnomeKeyring::GetAllLogins(PRUint32 *aCount,
   return foundListToArray(foundToLoginInfo, foundList, aCount, aLogins);
 }
 
+#if HAVE_NSILMS_GETALLENCRYPTEDLOGINS
 NS_IMETHODIMP GnomeKeyring::GetAllEncryptedLogins(unsigned int*,
                                                   nsILoginInfo***)
 {
   return NS_ERROR_NOT_IMPLEMENTED;
 }
+#endif
 
 NS_IMETHODIMP GnomeKeyring::SearchLogins(PRUint32 *count,
                                          nsIPropertyBag *matchData,

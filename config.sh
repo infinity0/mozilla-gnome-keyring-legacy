@@ -25,9 +25,33 @@ NS_IMETHODIMP GnomeKeyring::GetIsLoggedIn(bool *aIsLoggedIn) { return NS_OK; }
 EOF
 )
 
+HAVE_NSILMS_INITWITHFILE_1=$({ cat <<EOF; } | $CXX $XUL_CFLAGS $GNOME_CFLAGS $CXXFLAGS -x c++ -w -c -o /dev/null - 2>/dev/null && echo 1 || echo 0
+#include "$SRC_GNOME_KEYRING_H"
+NS_IMETHODIMP GnomeKeyring::InitWithFile(nsIFile *aInputFile) { return NS_OK; }
+EOF
+)
+
 HAVE_NSILMS_INITWITHFILE_2=$({ cat <<EOF; } | $CXX $XUL_CFLAGS $GNOME_CFLAGS $CXXFLAGS -x c++ -w -c -o /dev/null - 2>/dev/null && echo 1 || echo 0
 #include "$SRC_GNOME_KEYRING_H"
 NS_IMETHODIMP GnomeKeyring::InitWithFile(nsIFile *aInputFile, nsIFile *aOutputFile) { return NS_OK; }
+EOF
+)
+
+HAVE_NSILMS_INITALIZE_MUTABLEHANDLE=$({ cat <<EOF; } | $CXX $XUL_CFLAGS $GNOME_CFLAGS $CXXFLAGS -x c++ -w -c -o /dev/null - 2>/dev/null && echo 1 || echo 0
+#include "$SRC_GNOME_KEYRING_H"
+NS_IMETHODIMP GnomeKeyring::Initialize(JS::MutableHandleValue _retval) { return NS_OK; }
+EOF
+)
+
+HAVE_NSILMS_TERMINATE_MUTABLEHANDLE=$({ cat <<EOF; } | $CXX $XUL_CFLAGS $GNOME_CFLAGS $CXXFLAGS -x c++ -w -c -o /dev/null - 2>/dev/null && echo 1 || echo 0
+#include "$SRC_GNOME_KEYRING_H"
+NS_IMETHODIMP GnomeKeyring::Terminate(JS::MutableHandleValue _retval) { return NS_OK; }
+EOF
+)
+
+HAVE_NSILMS_GETALLENCRYPTEDLOGINS=$({ cat <<EOF; } | $CXX $XUL_CFLAGS $GNOME_CFLAGS $CXXFLAGS -x c++ -w -c -o /dev/null - 2>/dev/null && echo 1 || echo 0
+#include "$SRC_GNOME_KEYRING_H"
+NS_IMETHODIMP GnomeKeyring::GetAllEncryptedLogins(unsigned int*, nsILoginInfo***) { return NS_OK; }
 EOF
 )
 
@@ -48,7 +72,7 @@ $CXX $SRC_XPCOM_ABI_CPP -DHAVE_MOZ_BUG_956507="$HAVE_MOZ_BUG_956507" -o "$DST_XP
 PLATFORM="$("$DST_XPCOM_ABI")"
 
 for var in XUL_VERSION XUL_VER_MIN XUL_VER_MAX PLATFORM \
-  HAVE_NSILMS_CHAR16_T HAVE_NSILMS_GETISLOGGEDIN HAVE_NSILMS_INITWITHFILE_2 HAVE_MOZ_BUG_956507 HAVE_MOZGLUE; do
+  HAVE_NSILMS_CHAR16_T HAVE_NSILMS_GETISLOGGEDIN HAVE_NSILMS_INITWITHFILE_1 HAVE_NSILMS_INITWITHFILE_2 HAVE_NSILMS_INITALIZE_MUTABLEHANDLE HAVE_NSILMS_TERMINATE_MUTABLEHANDLE HAVE_NSILMS_GETALLENCRYPTEDLOGINS HAVE_MOZ_BUG_956507 HAVE_MOZGLUE; do
 	eval val=\$$var
 	echo export $var=$val
 done;
