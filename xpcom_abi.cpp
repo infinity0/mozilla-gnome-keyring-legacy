@@ -1,10 +1,6 @@
 #include <stdio.h>
 #include <stdint.h>
 
-#if HAVE_MOZ_BUG_956507
-#include "mozilla/Char16.h"
-#endif
-
 #include "nsIXULRuntime.h"
 #include "nsServiceManagerUtils.h"
 #include "nsStringAPI.h"

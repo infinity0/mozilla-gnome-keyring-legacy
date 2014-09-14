@@ -37,10 +37,6 @@
  *
  * ***** END LICENSE BLOCK ***** */
 
-#if HAVE_MOZ_BUG_956507
-#include "mozilla/Char16.h"
-#endif
-
 #include "GnomeKeyring.h"
 #include "nsMemory.h"
 #include "nsILoginInfo.h"
@@ -56,12 +52,6 @@
 #include "nsIVariant.h"
 #include "nsIPrefService.h"
 #include "nsIPrefBranch.h"
-
-#if HAVE_NSILMS_CHAR16_T
-typedef char16_t _char16_t;
-#else
-typedef PRUnichar _char16_t;
-#endif
 
 #pragma GCC visibility push(default)
 extern "C" {
@@ -494,10 +484,10 @@ foundToLoginInfo(GnomeKeyringFound* found)
   return loginInfo;
 }
 
-_char16_t *
+char16_t *
 foundToHost(GnomeKeyringFound* found)
 {
-  _char16_t *host = NULL;
+  char16_t *host = NULL;
 
   GnomeKeyringAttribute *attrArray =
     (GnomeKeyringAttribute *)found->attributes->data;
@@ -560,24 +550,6 @@ foundListToArray(T (*aFoundToObject)(GnomeKeyringFound*),
 // see https://developer.mozilla.org/En/NsILoginManagerStorage
 // see nsILoginManagerStorage.h
 
-/// The following code works around the problem that newILoginManagerStorage has a new UUID in
-/// Firefox 4.0, but this component should be compatible with both 3.6 and 4.0.
-
-#define LOGIN_MANAGER_STORAGE_3_6_CID {0xe66c97cd, 0x3bcf, 0x4eee, { 0x99, 0x37, 0x38, 0xf6, 0x50, 0x37, 0x2d, 0x77 }}
-NS_DEFINE_NAMED_CID(LOGIN_MANAGER_STORAGE_3_6_CID);
-
-NS_IMPL_ADDREF(GnomeKeyring)
-NS_IMPL_RELEASE(GnomeKeyring)
-
-NS_INTERFACE_MAP_BEGIN(GnomeKeyring)
-NS_INTERFACE_MAP_ENTRY(nsILoginManagerStorage)
-  if ( aIID.Equals(kLOGIN_MANAGER_STORAGE_3_6_CID ) )
-    foundInterface = static_cast<nsILoginManagerStorage*>(this);
-  else
-NS_INTERFACE_MAP_ENTRY_AMBIGUOUS(nsISupports, nsILoginManagerStorage)
-NS_INTERFACE_MAP_END
-
-// End code to deal with 4.0  / 3.6 compatibility
 #if HAVE_NSILMS_INITALIZE_MUTABLEHANDLE
 NS_IMETHODIMP GnomeKeyring::Initialize(JS::MutableHandleValue _retval)
 #else
@@ -804,7 +776,7 @@ NS_IMETHODIMP GnomeKeyring::SearchLogins(PRUint32 *count,
 }
 
 NS_IMETHODIMP GnomeKeyring::GetAllDisabledHosts(PRUint32 *aCount,
-                                                _char16_t ***aHostnames)
+                                                char16_t ***aHostnames)
 {
   AutoFoundList foundList;
   GnomeKeyringResult result = findHostItemsAll(&foundList);
@@ -903,7 +875,6 @@ NS_IMETHODIMP GnomeKeyring::GetUiBusy(bool *aUiBusy)
   return NS_OK;
 }
 
-#if HAVE_NSILMS_GETISLOGGEDIN
 /**
  * True when the master password has already been entered.
  */
@@ -913,8 +884,6 @@ NS_IMETHODIMP GnomeKeyring::GetIsLoggedIn(bool *aIsLoggedIn)
   *aIsLoggedIn = TRUE;
   return NS_OK;
 }
-#endif
-
 
 
 /* End of implementation class template. */
