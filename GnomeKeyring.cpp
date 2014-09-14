@@ -634,19 +634,18 @@ NS_IMETHODIMP GnomeKeyring::Terminate(JS::MutableHandleValue _retval)
 }
 #endif
 
-#if (HAVE_NSILMS_INITWITHFILE_2 || HAVE_NSILMS_INITWITHFILE_1)
+#if HAVE_NSILMS_INITWITHFILE_1
+NS_IMETHODIMP GnomeKeyring::InitWithFile(nsIFile *aInputFile)
+{
+  return Init();
+}
+#endif
+
 #if HAVE_NSILMS_INITWITHFILE_2
 NS_IMETHODIMP GnomeKeyring::InitWithFile(nsIFile *aInputFile,
                                          nsIFile *aOutputFile)
-#else
-NS_IMETHODIMP GnomeKeyring::InitWithFile(nsIFile *aInputFile)
-#endif
 {
-#if HAVE_NSILMS_INITALIZE_MUTABLEHANDLE
-  return NS_ERROR_NOT_IMPLEMENTED;
-#else
   return Init();
-#endif
 }
 #endif
 
